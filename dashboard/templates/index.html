@@ -1,36 +1,48 @@
 <!-- dashboard/templates/index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Pipeline Dashboard</title>
+    <title>Tableau de Bord du Pipeline</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
             integrity="sha384-fVXwnxRb4KMRr8Tc6V3zV4o17A4PoqvV7r7ePIBqST5DlE9dv5xqIM+GJ0X0Ck6Q"
             crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Pipeline Progress Dashboard</h1>
+    <h1>Tableau de Bord du Pipeline</h1>
     <div id="status">
-        <h2>Status</h2>
-        <p id="pipeline-status">Running...</p>
+        <h2>Statut</h2>
+        <p id="pipeline-status">En cours...</p>
     </div>
     <div id="progress">
-        <h2>Progress</h2>
+        <h2>Progrès</h2>
         <ul id="progress-list">
-            <!-- Progress updates will appear here -->
+            <!-- Les mises à jour de progrès apparaîtront ici -->
         </ul>
     </div>
     <div id="downloads">
-        <h2>Downloads</h2>
+        <h2>Téléchargements</h2>
         <ul id="download-list">
-            <!-- Downloaded files will appear here -->
+            <!-- Les fichiers téléchargés apparaîtront ici -->
+        </ul>
+    </div>
+    <div id="embeddings">
+        <h2>Embeddings</h2>
+        <ul id="embedding-list">
+            <!-- Les embeddings traités apparaîtront ici -->
+        </ul>
+    </div>
+    <div id="content">
+        <h2>Contenu Extrait et Réécrit</h2>
+        <ul id="content-list">
+            <!-- Le contenu extrait et réécrit apparaîtra ici -->
         </ul>
     </div>
     <div id="logs">
         <h2>Logs</h2>
         <ul id="log-list">
-            <!-- Log messages will appear here -->
+            <!-- Les messages de log apparaîtront ici -->
         </ul>
     </div>
 
