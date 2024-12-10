@@ -1,0 +1,39 @@
+<!-- dashboard/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pipeline Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+            integrity="sha384-fVXwnxRb4KMRr8Tc6V3zV4o17A4PoqvV7r7ePIBqST5DlE9dv5xqIM+GJ0X0Ck6Q"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Pipeline Progress Dashboard</h1>
+    <div id="status">
+        <h2>Status</h2>
+        <p id="pipeline-status">Running...</p>
+    </div>
+    <div id="progress">
+        <h2>Progress</h2>
+        <ul id="progress-list">
+            <!-- Progress updates will appear here -->
+        </ul>
+    </div>
+    <div id="downloads">
+        <h2>Downloads</h2>
+        <ul id="download-list">
+            <!-- Downloaded files will appear here -->
+        </ul>
+    </div>
+    <div id="logs">
+        <h2>Logs</h2>
+        <ul id="log-list">
+            <!-- Log messages will appear here -->
+        </ul>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
