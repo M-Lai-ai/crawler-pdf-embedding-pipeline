@@ -1,0 +1,52 @@
+# config.yaml
+
+pipeline_steps:
+  - crawler
+  - pdf_doc_extractor
+  - embedding
+  - content_rewriter
+
+llm_provider: "openai"
+embedding_provider: "openai"
+
+api_keys:
+  openai_api_keys:
+    - "your_openai_api_key1"
+    - "your_openai_api_key2"
+  anthropic_api_key: "your_anthropic_api_key"
+  mistral_api_key: "your_mistral_api_key"
+  voyage_api_key: "your_voyage_api_key"
+
+model:
+  max_tokens: 10000
+
+directories:
+  input_dir: "input"
+  output_dir: "output"
+  crawler_output_dir: "output/crawler_output"
+  pdf_doc_output_dir: "output/pdf_doc_extracted"
+  embedding_output_dir: "output/embedding_output"
+  content_rewriter_output_dir: "output/content_rewritten"
+
+crawler_params:
+  start_url: "https://your-example-site.com/fr-ca/"
+  max_depth: 2
+  use_playwright: false
+  download_pdf: true
+  download_doc: true
+  download_image: false
+  download_other: false
+  max_urls: null
+  excluded_paths:
+    - "product-selector"
+
+checkpoint_file: "output/checkpoint.json"
+
+logging:
+  verbose: false
+  log_level: "INFO"
+
+content_rewriter:
+  enabled: true
+  model: "openai"
+  api_key: "your_content_rewriter_api_key"
