@@ -9,7 +9,7 @@ h1 {
     text-align: center;
 }
 
-#status, #progress, #downloads, #logs {
+#status, #progress, #downloads, #embeddings, #content, #logs {
     margin-bottom: 30px;
 }
 
