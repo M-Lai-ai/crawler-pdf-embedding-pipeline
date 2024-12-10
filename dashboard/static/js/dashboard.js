@@ -6,14 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const logList = document.getElementById('log-list');
     const progressList = document.getElementById('progress-list');
     const downloadList = document.getElementById('download-list');
+    const embeddingList = document.getElementById('embedding-list');
+    const contentList = document.getElementById('content-list');
     const pipelineStatus = document.getElementById('pipeline-status');
 
     socket.on('connect', () => {
-        appendLog('info', 'Connected to the server.');
+        appendLog('info', 'Connecté au serveur.');
     });
 
     socket.on('disconnect', () => {
-        appendLog('error', 'Disconnected from the server.');
+        appendLog('error', 'Déconnecté du serveur.');
     });
 
     socket.on('log', (data) => {
@@ -23,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     socket.on('download', (data) => {
-        const fileType = data.file_type || 'Unknown';
-        const filename = data.filename || 'Unnamed';
+        const fileType = data.file_type || 'Inconnu';
+        const filename = data.filename || 'Non nommé';
         appendDownload(fileType, filename);
     });
 
@@ -32,11 +34,27 @@ document.addEventListener('DOMContentLoaded', () => {
         appendProgress(data);
     });
 
+    socket.on('embedding_processed', (data) => {
+        const filename = data.filename || 'Non nommé';
+        const chunk_id = data.chunk_id || 'N/A';
+        appendEmbedding(filename, chunk_id);
+    });
+
+    socket.on('content_extracted', (data) => {
+        const filename = data.filename || 'Non nommé';
+        appendContentExtracted(filename);
+    });
+
+    socket.on('content_rewritten', (data) => {
+        const filename = data.filename || 'Non nommé';
+        appendContentRewritten(filename);
+    });
+
     socket.on('crawl_completed', (data) => {
         const duration = data.duration_seconds || 0;
-        const status = data.status || 'unknown';
-        pipelineStatus.textContent = `Completed in ${duration.toFixed(2)} seconds with status: ${status}`;
-        appendLog('info', `Crawl completed in ${duration.toFixed(2)} seconds with status: ${status}`);
+        const status = data.status || 'inconnu';
+        pipelineStatus.textContent = `Terminé en ${duration.toFixed(2)} secondes avec le statut : ${status}`;
+        appendLog('info', `Crawl terminé en ${duration.toFixed(2)} secondes avec le statut : ${status}`);
     });
 
     function appendLog(level, message) {
@@ -49,11 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function appendProgress(data) {
         let message = '';
         if (data.type === 'new_url') {
-            message = `New URL discovered: ${data.url}`;
+            message = `Nouvelle URL découverte : ${data.url}`;
         } else if (data.type === 'page_crawled') {
-            message = `Page crawled: ${data.url}`;
-        } else if (data.type === 'content_extracted') {
-            message = `Content extracted from: ${data.url}, saved as ${data.filename}`;
+            message = `Page crawled : ${data.url}`;
+        } else if (data.type === 'content_processed') {
+            message = `Contenu traité pour la page ${data.page_num} du document ${data.document}`;
         }
         if (message) {
             const li = document.createElement('li');
@@ -66,5 +84,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.textContent = `[${fileType}] ${filename}`;
         downloadList.prepend(li);
+    }
+
+    function appendEmbedding(filename, chunk_id) {
+        const li = document.createElement('li');
+        li.textContent = `Embedding traité : ${filename}, Chunk ID : ${chunk_id}`;
+        embeddingList.prepend(li);
+    }
+
+    function appendContentExtracted(filename) {
+        const li = document.createElement('li');
+        li.textContent = `Contenu extrait : ${filename}`;
+        contentList.prepend(li);
+    }
+
+    function appendContentRewritten(filename) {
+        const li = document.createElement('li');
+        li.textContent = `Contenu réécrit : ${filename}`;
+        contentList.prepend(li);
     }
 });
